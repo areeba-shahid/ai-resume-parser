@@ -5,7 +5,7 @@ import { candidates } from "../services/api";
 function MyApplications() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  //const [error, setError] = useState("");
 
   useEffect(() => {
     fetchApplications();
