@@ -2,8 +2,12 @@
 import axios from "axios";
 import io from "socket.io-client";
 
-const API_URL = "http://localhost:5000/api";
-const SOCKET_URL = "http://localhost:5000";
+// Use environment variables with fallback for local development
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || "http://localhost:5000";
+
+console.log("🔗 API URL:", API_URL);
+console.log("🔗 Socket URL:", SOCKET_URL);
 
 const api = axios.create({
   baseURL: API_URL,
@@ -75,7 +79,7 @@ export const jobs = {
   getCandidates: (id) => api.get(`/jobs/${id}/candidates`),
 };
 
-// Candidates - FIXED: Make sure all methods are exported correctly
+// Candidates
 export const candidates = {
   apply: (formData) =>
     api.post("/candidates/apply", formData, {
