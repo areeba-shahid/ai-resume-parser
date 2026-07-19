@@ -5,7 +5,7 @@ import { candidates } from "../services/api";
 function MyApplications() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
-  //const [error, setError] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetchApplications();
@@ -16,22 +16,21 @@ function MyApplications() {
       const response = await candidates.getMyApplications();
       console.log("Applications:", response.data);
       setApplications(response.data.applications || []);
+      setError(""); // Clear error on success
     } catch (error) {
       console.error("Error fetching applications:", error);
-      setError("Failed to load your applications");
+      setError("Failed to load your applications. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+
   const sortedApplications = [...applications].sort((a, b) => {
-    // If a is deleted, push it down
     if (!a.jobId && b.jobId) return 1;
-
-    // If b is deleted, keep it below
     if (a.jobId && !b.jobId) return -1;
-
     return 0;
   });
+
   const getScoreColor = (score) => {
     if (score >= 80) return "text-green-600";
     if (score >= 60) return "text-blue-600";
@@ -50,6 +49,17 @@ function MyApplications() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-12">Loading your applications...</div>
+      </div>
+    );
+  }
+
+  // Show error if any
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="bg-red-100 text-red-700 p-4 rounded-lg text-center">
+          {error}
+        </div>
       </div>
     );
   }
