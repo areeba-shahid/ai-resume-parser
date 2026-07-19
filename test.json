@@ -1,0 +1,14 @@
+{
+  "name": "AI Resume Screener",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "resume-screened",
+        "responseMode": "onReceived"
+      },
+      "name": "Webhook - Resume Received",
+      "type": "n8n-nodes-base.webhook",
+      "position": [250, 300]
+    }
+  ]
+}
